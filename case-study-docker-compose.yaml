@@ -58,7 +58,7 @@ services:
 
   stream_extractor:
     build:
-      context: ..ingestion/stream
+      context: ./ingestion/stream
       dockerfile: Dockerfile
     container_name: stream_extractor
     depends_on:
@@ -153,7 +153,6 @@ services:
     ports:
       - "9864:9864"
     volumes:
-      - datanode_data:/opt/hadoop/dfs/data
       - ./hadoop/conf/core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml:ro
       - ./hadoop/conf/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml:ro
       - ./hadoop/scripts/datanode.sh:/scripts/datanode.sh:ro

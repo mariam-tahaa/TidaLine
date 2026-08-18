@@ -9,7 +9,8 @@ __pycache__/
 *.log
 
 postgres_data/
-kafka_data/
+kafka_kraft_data/
+hdfs/data/namenode/
 
 .airflow/
 

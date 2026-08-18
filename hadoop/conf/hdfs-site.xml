@@ -8,7 +8,7 @@
 
     <property>
         <name>dfs.datanode.data.dir</name>
-        <value>/opt/hadoop/dfs/data</value>
+        <value>/tmp/hadoop/dfs/data</value>
     </property>
 
     <property>
