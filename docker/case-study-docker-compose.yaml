@@ -68,14 +68,14 @@ services:
       retries: 20
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./stream/create_earthquakes.sql:/docker-entrypoint-initdb.d/01-earthquakes.sql:ro
+      - ./ingestion/stream/create_earthquakes.sql:/docker-entrypoint-initdb.d/01-earthquakes.sql:ro
     restart: unless-stopped
     networks:
       - case-study-network
 
   stream_extractor:
     build:
-      context: ../ingestion/stream
+      context: ./stream
       dockerfile: Dockerfile
     container_name: stream_extractor
     depends_on:
@@ -139,8 +139,8 @@ services:
       - "2222:22"
     command: batch:batchpass:1001:1001:data
     volumes:
-      - ./batch/data:/data
-      - ./batch/data:/home/batch/data
+      - ./ingestion/batch/data:/data
+      - ./ingestion/batch/data:/home/batch/data
     restart: unless-stopped
     networks:
       - case-study-network
