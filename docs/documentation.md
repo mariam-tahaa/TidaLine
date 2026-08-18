@@ -40,6 +40,7 @@ schema-registry
 stream_extractor
 sftp
 `
+---
 
 ### 2. Verify PostgreSQL
 
@@ -62,6 +63,7 @@ docker exec -it postgres psql -U postgres -d maritime_logistics
 ```sql
 SELECT * FROM earthquakes;
 ```
+---
 
 ### 3. Verify PostgreSQL logical replication
 
@@ -89,6 +91,7 @@ slot_name                 | plugin  | active
 --------------------------+---------+-------
 debezium                   | pgoutput| t
 ```
+---
 
 ### 4. Verify Kafka Connect
 
@@ -102,15 +105,16 @@ Invoke-RestMethod http://localhost:8083/connectors
 
 ```bash
 [
-  "test2-connector"
+  "tidaline-connector"
 ]
 ```
+---
 
 ### 5. Check connector status
 
 ```bash
 Invoke-RestMethod `
-  http://localhost:8083/connectors/test2-connector/status
+  http://localhost:8083/connectors/tidaline-connector/status
 ```
 *Result :*
 
@@ -127,6 +131,7 @@ Invoke-RestMethod `
   ]
 }
 ```
+---
 
 ### 6. Check the Kafka topic
 
@@ -141,6 +146,7 @@ docker exec kafka kafka-topics `
 ```bash
 earthquicks-cdc.public.earthquakes
 ```
+---
 
 ### 7. Start a Kafka consumer
 
@@ -152,6 +158,7 @@ docker exec -it kafka kafka-console-consumer `
   --topic earthquicks-cdc.public.earthquakes `
   --from-beginning
 ```
+---
 
 ### 8. Insert a test record into PostgreSQL
 
@@ -197,7 +204,7 @@ VALUES (
     'CREATE'
 );
 ```
-
+---
 
 ### 9. Watch the Kafka terminal
 
@@ -231,9 +238,7 @@ VALUES (
 
 - "op": "c"
 
-- which means:
-
-CREATE / INSERT
+- which means: CREATE / INSERT
 
 ### 10. Test UPDATE
 
@@ -246,13 +251,9 @@ WHERE location = 'Test Location';
 ```
 
 
-- This time:
+- This time: "op": "u"
 
-- "op": "u"
-
-means:
-
-UPDATE
+- means: UPDATE
 
 ### 11. Test DELETE
 
@@ -263,10 +264,6 @@ DELETE FROM earthquakes
 WHERE location = 'Test Location';
 ```
 
-- Kafka should receive:
+- Kafka should receive: "op": "d"
 
-- "op": "d"
-
-meaning:
-
-DELETE
+- meaning: DELETE
