@@ -41,9 +41,16 @@ after_schema = StructType(
 
 payload_schema = StructType(
     [
+        StructField("before", after_schema, True),
         StructField("after", after_schema, True),
         StructField("op", StringType(), True),
         StructField("ts_ms", LongType(), True),
+    ]
+)
+
+root_schema = StructType(
+    [
+        StructField("payload", payload_schema, True),
     ]
 )
 
@@ -51,19 +58,25 @@ payload_schema = StructType(
 raw_kafka_df = (
     spark.readStream.format("kafka")
     .option("kafka.bootstrap.servers", "kafka:29092")
-    .option("subscribe", "tidaline.public.earthquakes")
+    .option("subscribe", "earthquicks-cdc.public.earthquakes")
     .option("startingOffsets", "earliest")
     .load()
 )
 
 # Deserialize JSON payload and extract nested Debezium fields
 parsed_df = (
-    raw_kafka_df.selectExpr("CAST(value AS STRING) as json_payload")
-    .select(from_json(col("json_payload"), payload_schema).alias("data"))
+    raw_kafka_df
+    .selectExpr("CAST(value AS STRING) AS json_payload")
     .select(
-        col("data.op").alias("operation"),
-        col("data.ts_ms").alias("cdc_timestamp"),
-        col("data.after.*"),
+        from_json(
+            col("json_payload"),
+            root_schema
+        ).alias("data")
+    )
+    .select(
+        col("data.payload.op").alias("operation"),
+        col("data.payload.ts_ms").alias("cdc_timestamp"),
+        col("data.payload.after.*")
     )
 )
 
