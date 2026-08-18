@@ -26,4 +26,9 @@
         <value>0.0.0.0:9870</value>
     </property>
 
+    <property>
+        <name>dfs.datanode.data.dir.perm</name>
+        <value>700</value>
+    </property>
+
 </configuration>
