@@ -51,14 +51,14 @@ services:
       retries: 20
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./stream/create_earthquakes.sql:/docker-entrypoint-initdb.d/01-earthquakes.sql:ro
+      - ./ingestion/stream/create_earthquakes.sql:/docker-entrypoint-initdb.d/01-earthquakes.sql:ro
     restart: unless-stopped
     networks:
       - case-study-network
 
   stream_extractor:
     build:
-      context: ./stream
+      context: ..ingestion/stream
       dockerfile: Dockerfile
     container_name: stream_extractor
     depends_on:
@@ -118,8 +118,8 @@ services:
       - "2222:22"
     command: batch:batchpass:1001:1001:data
     volumes:
-      - ./batch/data:/data
-      - ./batch/data:/home/batch/data
+      - ./ingestion/batch/data:/data
+      - ./ingestion/batch/data:/home/batch/data
     restart: unless-stopped
     networks:
       - case-study-network
@@ -133,7 +133,7 @@ services:
       - "8020:8020"
     volumes:
       - namenode_data:/opt/hadoop/dfs/name
-      - ./batch/data:/data:ro
+      - ./ingestion/batch/data:/data:ro
       - ./hadoop/conf/core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml:ro
       - ./hadoop/conf/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml:ro
       - ./hadoop/scripts/namenode.sh:/scripts/namenode.sh:ro
