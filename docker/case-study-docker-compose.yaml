@@ -75,7 +75,7 @@ services:
 
   stream_extractor:
     build:
-      context: ./stream
+      context: ../ingestion/stream
       dockerfile: Dockerfile
     container_name: stream_extractor
     depends_on:
@@ -145,6 +145,22 @@ services:
     networks:
       - case-study-network
 
+  schema-registry:
+    image: confluentinc/cp-schema-registry:7.4.0
+    container_name: schema-registry
+    hostname: schema-registry
+    depends_on:
+      kafka:
+        condition: service_healthy
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka:29092
+    networks:
+      - case-study-network
+        
 networks:
   case-study-network:
     name: tidaline-case-study-network
