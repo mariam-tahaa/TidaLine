@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.env
+
+.vscode/
+
+*.parquet
+*.csv
+*.log
+
+postgres_data/
+kafka_data/
+
+.airflow/
+
+.idea/
