@@ -23,11 +23,7 @@ services:
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "kafka-topics --bootstrap-server localhost:9092 --list >/dev/null 2>&1",
-        ]
+      test: [ "CMD-SHELL", "kafka-topics --bootstrap-server localhost:9092 --list >/dev/null 2>&1" ]
       interval: 10s
       timeout: 10s
       retries: 12
@@ -47,22 +43,9 @@ services:
       POSTGRES_DB: maritime_logistics
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-    command:
-      [
-        "postgres",
-        "-c",
-        "wal_level=logical",
-        "-c",
-        "max_replication_slots=10",
-        "-c",
-        "max_wal_senders=10",
-      ]
+    command: [ "postgres", "-c", "wal_level=logical", "-c", "max_replication_slots=10", "-c", "max_wal_senders=10" ]
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "pg_isready -U postgres -d maritime_logistics -h localhost",
-        ]
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d maritime_logistics -h localhost" ]
       interval: 5s
       timeout: 5s
       retries: 20
@@ -118,11 +101,7 @@ services:
       KEY_CONVERTER_SCHEMAS_ENABLE: "false"
       VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "curl --silent --fail http://localhost:8083/connector-plugins >/dev/null",
-        ]
+      test: [ "CMD-SHELL", "curl --silent --fail http://localhost:8083/connector-plugins >/dev/null" ]
       interval: 10s
       timeout: 5s
       retries: 18
@@ -145,6 +124,50 @@ services:
     networks:
       - case-study-network
 
+  namenode:
+    image: ysfetman/bdss-hadoop-base:3.4.2
+    container_name: namenode
+    hostname: namenode
+    ports:
+      - "9870:9870"
+      - "8020:8020"
+    volumes:
+      - namenode_data:/opt/hadoop/dfs/name
+      - ./batch/data:/data:ro
+      - ./hadoop/conf/core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml:ro
+      - ./hadoop/conf/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml:ro
+      - ./hadoop/scripts/namenode.sh:/scripts/namenode.sh:ro
+    environment:
+      HADOOP_HOME: /opt/hadoop
+      HADOOP_CONF_DIR: /opt/hadoop/etc/hadoop
+      JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
+      PATH: /opt/hadoop/bin:/opt/hadoop/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    command: [ "/bin/bash", "/scripts/namenode.sh" ]
+    networks:
+      - case-study-network
+
+  datanode:
+    image: ysfetman/bdss-hadoop-base:3.4.2
+    container_name: datanode
+    hostname: datanode
+    ports:
+      - "9864:9864"
+    volumes:
+      - datanode_data:/opt/hadoop/dfs/data
+      - ./hadoop/conf/core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml:ro
+      - ./hadoop/conf/hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml:ro
+      - ./hadoop/scripts/datanode.sh:/scripts/datanode.sh:ro
+    environment:
+      HADOOP_HOME: /opt/hadoop
+      HADOOP_CONF_DIR: /opt/hadoop/etc/hadoop
+      JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
+      PATH: /opt/hadoop/bin:/opt/hadoop/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    command: [ "/bin/bash", "/scripts/datanode.sh" ]
+    depends_on:
+      - namenode
+    networks:
+      - case-study-network
+
 networks:
   case-study-network:
     name: tidaline-case-study-network
@@ -153,3 +176,5 @@ networks:
 volumes:
   kafka_kraft_data:
   postgres_data:
+  namenode_data:
+  datanode_data:
