@@ -3,21 +3,17 @@
 from __future__ import annotations
 
 import json
-import logging
+from utils.logger import Logger 
 import os
 import time
 from datetime import datetime, timezone
 
 from websocket import WebSocketApp
+from .writer import PostgresWriter
 
-from writer import PostgresWriter
-
-
-logging.basicConfig(
-    level=os.getenv("LOG_LEVEL", "INFO"),
-    format="%(asctime)s [%(levelname)s] %(message)s",
-)
-LOGGER = logging.getLogger("seismic-streamer")
+ 
+LOGGER = Logger()
+LOGGER.info("Starting seismic streamer")
 
 
 def parse_time(value):

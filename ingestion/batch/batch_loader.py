@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import argparse
 import io
-import logging
+from utils.logger import Logger 
 from datetime import date
 from pathlib import Path
 
@@ -17,12 +17,9 @@ PORTS_URL = (
     "https://msi.nga.mil/api/publications/download"
     "?key=16920959/SFH00000/UpdatedPub150.csv&type=view"
 )
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-)
-LOGGER = logging.getLogger("ports")
+ 
+LOGGER = Logger()
+LOGGER.info('Ports data extraction initialized')
 
 
 def download_ports(output_directory: Path) -> Path:
