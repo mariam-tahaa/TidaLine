@@ -1,5 +1,4 @@
 from datetime import date
-
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import lit
 
