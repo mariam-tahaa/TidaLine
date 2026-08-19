@@ -32,14 +32,14 @@ docker compose -f docker/case-study-docker-compose.yaml ps
 
 *Result Should Be :*
 
-`
+```text
 kafka
 postgres
 kafka-connect
 schema-registry
 stream_extractor
 sftp
-`
+```
 ---
 
 ### 2. Verify PostgreSQL
@@ -267,3 +267,12 @@ WHERE location = 'Test Location';
 - Kafka should receive: "op": "d"
 
 - meaning: DELETE
+
+---
+
+## Resource Links
+
+- What in `connector.json` file : [Debezium properties](https://debezium.io/documentation/reference/stable/connectors/postgresql.html#postgresql-example-configuration)
+
+- Why Avro Serialization : [Avro Serialization](https://debezium.io/documentation/reference/stable/configuration/avro.html)
+
