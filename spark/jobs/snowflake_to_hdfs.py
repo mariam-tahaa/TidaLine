@@ -36,7 +36,7 @@ sfOptions = {
 TABLE_NAME = "EARTHQUAKES_REALTIME"
 
 HDFS_PATH = (
-    "hdfs://namenode:8020/data/earthquakes"
+    "hdfs://namenode:8020/bronze/earthquakes"
 )
 
 
