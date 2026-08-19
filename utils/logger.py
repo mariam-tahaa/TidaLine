@@ -1,5 +1,6 @@
 import logging
 from logging.handlers import TimedRotatingFileHandler
+from pathlib import Path
 
 
 class Logger:
@@ -19,6 +20,8 @@ class Logger:
         self.logger.setLevel(logging.DEBUG)
 
         if not self.logger.hasHandlers():
+            Path(log_file).parent.mkdir(parents=True, exist_ok=True)
+
             # File handler: rotate logs daily at midnight
             file_handler = TimedRotatingFileHandler(
                 filename=log_file,
