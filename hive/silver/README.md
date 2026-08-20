@@ -12,19 +12,29 @@ The Silver layer transforms raw Bronze data into cleaned, validated, and standar
 - Added metadata tracking: `bronze_file_name`, `bronze_load_date`, `silver_process_date`, `etl_load_date`
 - Partitioned by `load_date` for efficient querying
 - Stored as Parquet with SNAPPY compression
+- - Hive external table points to the Silver HDFS directory:
+  `hdfs://namenode:8020/silver/ports`
 
 ### 2. Business Logic
-- **supplies_rate**: Calculated from Provisions/Fuel Oil/Diesel/Potable Water/Repairs availability
-  - Excellent: All 5 services available
-  - Good: 4 services available  
-  - Limited: 2-3 services available
-  - Unavailable: 0-1 services available
-
-- **comm_rate**: Calculated from Radio/Telephone/Airport/Telefax availability
-  - Excellent: All 4 services available
-  - Good: 3 services available
-  - Limited: 2 services available
-  - Unavailable: 0-1 services available
+### supplies_rate:
+Calculated from Provisions/Fuel Oil/Diesel/Potable Water/Repairs availability
+ 
+| Available Services | Rate        |
+|--------------------:|-------------|
+| 5                    | Excellent   |
+| 4                    | Good        |
+| 2-3                  | Limited     |
+| 0-1                  | Unavailable |
+ 
+### comm_rate: 
+Calculated from Radio/Telephone/Airport/Telefax availability
+  
+| Available Services | Rate        |
+|--------------------:|-------------|
+| 4                    | Excellent   |
+| 3                    | Good        |
+| 2                    | Limited     |
+| 0-1                  | Unavailable |
 
 ### 3. Data Transformation
 - Column selection and renaming
@@ -42,8 +52,10 @@ Bronze Layer (HDFS)
     ↓ ports CSV files
 Silver Transformation (Spark Job)
     ↓ Cleaning + Validation + Business Logic
-Silver Layer (Hive Table)
-    ↓ Cleaned data ready for analytics
+Silver Layer (HDFS)
+    ↓ Parquet files
+Hive External Table
+    ↓ tidaline_silver.Silver_Ports
 Gold Layer (Future)
 ```
 
@@ -54,13 +66,22 @@ Gold Layer (Future)
 
 ## Testing
 
-### 1. Create Silver Table
+### Create Silver HDFS Directory
+
+Create the physical Silver directory in HDFS before creating the external Hive table:
+
+```bash
+docker exec namenode hdfs dfs -mkdir -p /silver/ports
+docker exec namenode hdfs dfs -chmod -R 777 /silver
+```
+
+### 1. Create Silver External Hive Table
 ```bash
 docker cp hive/silver/tables.sql spark:/tmp/tables.sql
 docker exec spark /opt/spark/bin/spark-sql -f /tmp/tables.sql
 ```
 
-### 2. Run Transformation Job
+### 2. Run Spark Transformation Job
 ```bash
 # Copy job and logger to container
 docker cp medallion/silver/spark/silver_job.py spark:/opt/spark-apps/silver_job.py
@@ -88,6 +109,13 @@ docker exec spark /opt/spark/bin/spark-sql -e "DESCRIBE tidaline_silver.Silver_P
 docker exec spark cat /tmp/silver_ports_etl.log
 ```
 
+### 4. Verify HDFS Output
+Check the Silver HDFS directory:
+ 
+```bash
+docker exec namenode hdfs dfs -ls -R /silver/ports
+```
+
 ## Test Results
 - **Records Processed**: 3,803 ports
 - **Data Quality**: 0 NULL values in critical fields
@@ -100,3 +128,14 @@ docker exec spark cat /tmp/silver_ports_etl.log
 - Deduplication logic
 - Coordinate range validation
 - Metadata tracking for audit trail
+- - HDFS-based Silver layer
+- Hive external table for analytics access
+
+## Important Note
+ 
+The Silver HDFS directory and Hive external table are separate components:
+ 
+- `/silver/ports` is the physical storage location in HDFS.
+- `tidaline_silver.Silver_Ports` is the Hive metadata layer.
+- The Hive external table points to `/silver/ports`.
+- The Spark job writes the actual Parquet data into `/silver/ports`.

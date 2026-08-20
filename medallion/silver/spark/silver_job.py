@@ -90,7 +90,8 @@ except Exception as e:
 # 3. Configuration
 # =============================================================================
 
-BRONZE_PATH = "/data/bronze/ports"  # HDFS path for Bronze layer
+BRONZE_PATH = "/bronze/ports"  # HDFS path for Bronze layer
+SILVER_PATH = "hdfs://namenode:8020/silver/ports"
 SILVER_TABLE = "tidaline_silver.Silver_Ports"
 LOAD_DATE = datetime.now().strftime("%Y-%m-%d")
 
@@ -152,17 +153,13 @@ silver_df = (
         col("Supplies - Potable Water").alias("supplies_potable_water"),
         col("Supplies - Fuel Oil").alias("supplies_fuel_oil"),
         col("Supplies - Diesel Oil").alias("supplies_diesel_oil"),
-        col("Supplies - Aviation Fuel").alias("supplies_aviation_fuel"),
-        col("Supplies - Deck").alias("supplies_deck"),
-        col("Supplies - Engine").alias("supplies_engine"),
-        col("Repairs").alias("repairs_available"),
+        col("Repairs").alias("repairs"),
         
         # Service flags - Communications
         col("Communications - Telephone").alias("comm_telephone"),
         col("Communications - Telefax").alias("comm_telefax"),
         col("Communications - Radio").alias("comm_radio"),
-        col("Communications - Airport").alias("comm_airport"),
-        col("Communications - Rail").alias("comm_rail")
+        col("Communications - Airport").alias("comm_airport")
     )
     
     # Clean string columns - trim and standardize
@@ -177,63 +174,62 @@ silver_df = (
     .withColumn("shelter_afforded", trim(col("shelter_afforded")))
     
     # Convert Yes/No strings to Boolean
-    # Treat "Yes" as True, everything else as False
+    # Yes → True, No → False, Unknown/NULL → NULL
     .withColumn("supplies_provisions", 
                  when(col("supplies_provisions") == "Yes", True)
-                 .otherwise(False))
+                 .when(col("supplies_provisions") == "No", False)
+                .otherwise(None))
     .withColumn("supplies_potable_water", 
                  when(col("supplies_potable_water") == "Yes", True)
-                 .otherwise(False))
+                 .when(col("supplies_potable_water") == "No", False)
+                 .otherwise(None))
     .withColumn("supplies_fuel_oil", 
                  when(col("supplies_fuel_oil") == "Yes", True)
-                 .otherwise(False))
+                 .when(col("supplies_fuel_oil") == "No", False)
+                 .otherwise(None))
     .withColumn("supplies_diesel_oil", 
                  when(col("supplies_diesel_oil") == "Yes", True)
-                 .otherwise(False))
-    .withColumn("supplies_aviation_fuel", 
-                 when(col("supplies_aviation_fuel") == "Yes", True)
-                 .otherwise(False))
-    .withColumn("supplies_deck", 
-                 when(col("supplies_deck") == "Yes", True)
-                 .otherwise(False))
-    .withColumn("supplies_engine", 
-                 when(col("supplies_engine") == "Yes", True)
-                 .otherwise(False))
-    .withColumn("repairs_available", 
-                 when(col("repairs_available") == "Yes", True)
-                 .otherwise(False))
+                 .when(col("supplies_diesel_oil") == "No", False)
+                 .otherwise(None))
+    # Major/Moderate/Limited → True
+    # Emergency Only/Unknown/NULL → False
+    .withColumn("repairs",
+                 when(col("repairs").isin("Major", "Moderate", "Limited"), True)
+                 .otherwise(False)
+)
     
     .withColumn("comm_telephone", 
                  when(col("comm_telephone") == "Yes", True)
-                 .otherwise(False))
+                 .when(col("comm_telephone") == "No", False)
+                 .otherwise(None))
     .withColumn("comm_telefax", 
                  when(col("comm_telefax") == "Yes", True)
-                 .otherwise(False))
+                 .when(col("comm_telefax") == "No", False)
+                 .otherwise(None))
     .withColumn("comm_radio", 
                  when(col("comm_radio") == "Yes", True)
-                 .otherwise(False))
+                 .when(col("comm_radio") == "No", False)
+                 .otherwise(None))
     .withColumn("comm_airport", 
                  when(col("comm_airport") == "Yes", True)
-                 .otherwise(False))
-    .withColumn("comm_rail", 
-                 when(col("comm_rail") == "Yes", True)
-                 .otherwise(False))
+                 .when(col("comm_airport") == "No", False)
+                 .otherwise(None))
     
     # Calculate supplies_rate based on business logic
     # Count of Provisions/Fuel Oil/Diesel/Potable Water/Repairs
     .withColumn(
         "supplies_count",
-        col("supplies_provisions").cast(IntegerType()) +
-        col("supplies_potable_water").cast(IntegerType()) +
-        col("supplies_fuel_oil").cast(IntegerType()) +
-        col("supplies_diesel_oil").cast(IntegerType()) +
-        col("repairs_available").cast(IntegerType())
+        coalesce(col("supplies_provisions").cast(IntegerType()), lit(0)) +
+        coalesce(col("supplies_potable_water").cast(IntegerType()), lit(0)) +
+        coalesce(col("supplies_fuel_oil").cast(IntegerType()), lit(0)) +
+        coalesce(col("supplies_diesel_oil").cast(IntegerType()), lit(0)) +
+        coalesce(col("repairs").cast(IntegerType()), lit(0))
     )
     .withColumn(
         "supplies_rate",
         when(col("supplies_count") == 5, "Excellent")
-        .when(col("supplies_count") == 4, "Good")
-        .when(col("supplies_count") >= 2, "Limited")
+        .when(col("supplies_count") >= 3, "Good")
+        .when(col("supplies_count") >= 1, "Limited")
         .otherwise("Unavailable")
     )
     
@@ -241,16 +237,16 @@ silver_df = (
     # Count of Radio/telephone/airport/Telefax
     .withColumn(
         "comm_count",
-        col("comm_radio").cast(IntegerType()) +
-        col("comm_telephone").cast(IntegerType()) +
-        col("comm_airport").cast(IntegerType()) +
-        col("comm_telefax").cast(IntegerType())
+        coalesce(col("comm_radio").cast(IntegerType()), lit(0)) +
+        coalesce(col("comm_telephone").cast(IntegerType()), lit(0)) +
+        coalesce(col("comm_airport").cast(IntegerType()), lit(0)) +
+        coalesce(col("comm_telefax").cast(IntegerType()), lit(0))
     )
     .withColumn(
         "comm_rate",
         when(col("comm_count") == 4, "Excellent")
-        .when(col("comm_count") == 3, "Good")
-        .when(col("comm_count") == 2, "Limited")
+        .when(col("comm_count") >= 2, "Good")
+        .when(col("comm_count") >= 1, "Limited")
         .otherwise("Unavailable")
     )
     
@@ -316,7 +312,7 @@ try:
         .mode("overwrite")
         .format("parquet")
         .partitionBy("load_date")
-        .saveAsTable(SILVER_TABLE)
+        .save(SILVER_PATH)
     )
     logger.info("Successfully loaded %d records to %s", silver_df.count(), SILVER_TABLE)
     logger.info("Data written to partition: load_date=%s", LOAD_DATE)
