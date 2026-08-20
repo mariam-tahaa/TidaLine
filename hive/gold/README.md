@@ -145,8 +145,6 @@ docker exec spark /opt/spark/bin/spark-submit /opt/spark-apps/gold_earthquakes_j
 
 ### 4. Repair partitions & verify
 ```bash
-docker exec spark /opt/spark/bin/spark-sql -e "MSCK REPAIR TABLE tidaline_gold.Fact_Seismic_Event; MSCK REPAIR TABLE tidaline_gold.Fact_Port_Seismic_Proximity; MSCK REPAIR TABLE tidaline_gold.Fact_Port_Risk_Snapshot;"
-
 docker exec spark /opt/spark/bin/spark-sql -e "SELECT COUNT(*) FROM tidaline_gold.Dim_Port WHERE is_current=true;"
 docker exec spark /opt/spark/bin/spark-sql -e "SELECT COUNT(*) FROM tidaline_gold.Fact_Seismic_Event;"
 docker exec spark /opt/spark/bin/spark-sql -e "SELECT classification, COUNT(*) FROM tidaline_gold.Fact_Port_Risk_Snapshot GROUP BY classification;"
