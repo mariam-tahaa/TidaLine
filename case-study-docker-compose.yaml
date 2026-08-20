@@ -226,7 +226,7 @@ services:
       namenode:
         condition: service_started
     environment:
-      SKIP_SCHEMA_INIT: "true"
+      IS_RESUME: "true"
       SERVICE_NAME: metastore
       DB_DRIVER: postgres
       SERVICE_OPTS: >-
