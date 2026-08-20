@@ -66,7 +66,16 @@ Gold Layer (Future)
 
 ## Testing
 
-### Create Silver HDFS Directory
+### 1. Create Hive's Warehouse Directory
+
+Create the default Hive warehouse directory in HDFS before creating the Hive database/table:
+
+```bash
+docker exec namenode hdfs dfs -mkdir -p /user/hive/warehouse
+docker exec namenode hdfs dfs -chmod -R 777 /user/hive/warehouse
+```
+
+### 2. Create Silver HDFS Directory
 
 Create the physical Silver directory in HDFS before creating the external Hive table:
 
@@ -75,13 +84,19 @@ docker exec namenode hdfs dfs -mkdir -p /silver/ports
 docker exec namenode hdfs dfs -chmod -R 777 /silver
 ```
 
-### 1. Create Silver External Hive Table
+### 3. Create Silver External Hive Table
 ```bash
 docker cp hive/silver/tables.sql spark:/tmp/tables.sql
 docker exec spark /opt/spark/bin/spark-sql -f /tmp/tables.sql
 ```
 
-### 2. Run Spark Transformation Job
+### 4. Confirm the database and table were created
+```bash
+docker exec spark /opt/spark/bin/spark-sql -e "SHOW DATABASES;"
+docker exec spark /opt/spark/bin/spark-sql -e "SHOW TABLES IN tidaline_silver;"
+```
+
+### 5. Run Spark Transformation Job
 ```bash
 # Copy job and logger to container
 docker cp medallion/silver/spark/silver_job.py spark:/opt/spark-apps/silver_job.py
@@ -91,7 +106,7 @@ docker cp utils/logger.py spark:/opt/spark-apps/logger.py
 docker exec spark /opt/spark/bin/spark-submit /opt/spark-apps/silver_job.py
 ```
 
-### 3. Verify Results
+### 6. Verify Results
 ```bash
 # Check record count
 docker exec spark /opt/spark/bin/spark-sql -e "SELECT COUNT(*) FROM tidaline_silver.Silver_Ports WHERE load_date = '2026-08-19';"
@@ -109,7 +124,7 @@ docker exec spark /opt/spark/bin/spark-sql -e "DESCRIBE tidaline_silver.Silver_P
 docker exec spark cat /tmp/silver_ports_etl.log
 ```
 
-### 4. Verify HDFS Output
+### 7. Verify HDFS Output
 Check the Silver HDFS directory:
  
 ```bash
@@ -128,7 +143,7 @@ docker exec namenode hdfs dfs -ls -R /silver/ports
 - Deduplication logic
 - Coordinate range validation
 - Metadata tracking for audit trail
-- - HDFS-based Silver layer
+- HDFS-based Silver layer
 - Hive external table for analytics access
 
 ## Important Note
