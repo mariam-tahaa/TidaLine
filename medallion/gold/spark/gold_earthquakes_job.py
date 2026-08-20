@@ -67,7 +67,7 @@ def build_fact_seismic_event(bronze_df, etl_ts):
     events = (
         bronze_df
         .filter(col("unid").isNotNull())
-        .withColumn("event_time", to_timestamp(col("time")))
+        .withColumn("event_time", to_timestamp(col("event_time")))
         .withColumn(
             "date_key",
             date_format(col("event_time"), "yyyyMMdd").cast(IntegerType()),
@@ -216,6 +216,9 @@ try:
         .partitionBy("date_key")
         .parquet(GOLD_FACT_SEISMIC_PATH)
     )
+
+    spark.sql("MSCK REPAIR TABLE tidaline_gold.Fact_Seismic_Event")
+
     logger.info("Fact_Seismic_Event written to %s", GOLD_FACT_SEISMIC_PATH)
 
     ports_df = spark.read.parquet(GOLD_DIM_PORT_PATH)
@@ -237,6 +240,9 @@ try:
         .partitionBy("date_key")
         .parquet(GOLD_PROXIMITY_PATH)
     )
+
+    spark.sql("MSCK REPAIR TABLE tidaline_gold.Fact_Port_Seismic_Proximity")
+
     logger.info("Proximity fact written to %s", GOLD_PROXIMITY_PATH)
 
     risk_snapshot = build_risk_snapshot(proximity, snapshot_date_key, etl_ts)
@@ -249,6 +255,9 @@ try:
         .partitionBy("date_key")
         .parquet(GOLD_RISK_SNAPSHOT_PATH)
     )
+
+    spark.sql("MSCK REPAIR TABLE tidaline_gold.Fact_Port_Risk_Snapshot")
+
     logger.info("Risk snapshot written to %s", GOLD_RISK_SNAPSHOT_PATH)
 
 except Exception as exc:
