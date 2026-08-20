@@ -313,7 +313,12 @@ try:
         .format("parquet")
         .partitionBy("load_date")
         .save(SILVER_PATH)
+
     )
+
+    # Register newly created partitions in Hive Metastore
+    spark.sql(f"MSCK REPAIR TABLE {SILVER_TABLE}")
+
     logger.info("Successfully loaded %d records to %s", silver_df.count(), SILVER_TABLE)
     logger.info("Data written to partition: load_date=%s", LOAD_DATE)
 except Exception as e:
