@@ -31,6 +31,7 @@ DATE_DIM_START = "2020-01-01"
 DATE_DIM_END = "2030-12-31"
 
 GOLD_DIM_DATE_PATH = "hdfs://namenode:8020/gold/dim_date"
+GOLD_DIM_PORT_TABLE = "tidaline_gold.Dim_Port"
 GOLD_DIM_PORT_PATH = "hdfs://namenode:8020/gold/dim_port"
 
 SILVER_TABLE = "tidaline_silver.Silver_Ports"
@@ -316,7 +317,7 @@ try:
     # Dim_Port SCD2
     # -------------------------------------------------------------------------
     try:
-        existing_dim = spark.read.parquet(GOLD_DIM_PORT_PATH)
+        existing_dim = spark.read.parquet(GOLD_DIM_PORT_TABLE)
         logger.info("Existing Dim_Port rows: %d", existing_dim.count())
     except Exception:
         existing_dim = spark.createDataFrame([], DIM_PORT_SCHEMA)
