@@ -15,3 +15,6 @@ kafka_data/
 
 .idea/
 logs/
+
+# Spark Streaming checkpoints
+spark/jobs/checkpoints/
