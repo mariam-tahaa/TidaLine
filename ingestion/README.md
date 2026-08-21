@@ -1,3 +1,5 @@
+## How to work with CDC & Kafka
+
 ### Connector.json
 
 - contains the configuration of the Debezium PostgreSQL source connector.
