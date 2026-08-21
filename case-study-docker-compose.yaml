@@ -58,8 +58,8 @@ services:
 
   stream_extractor:
     build:
-      context: ./ingestion/stream
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ingestion/stream/Dockerfile
     container_name: stream_extractor
     depends_on:
       postgres:
