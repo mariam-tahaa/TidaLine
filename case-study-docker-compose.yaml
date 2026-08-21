@@ -247,7 +247,103 @@ services:
 
 
 
+  airflow-db:
+    image: postgres:15
+    container_name: airflow-db
+    hostname: airflow-db
+    environment:
+      POSTGRES_DB: airflow
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+    volumes:
+      - airflow_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U airflow -d airflow -h localhost" ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks:
+      - case-study-network
 
+  airflow-init:
+    build:
+      context: ./airflow
+      dockerfile: Dockerfile
+      
+    container_name: airflow-init
+    depends_on:
+      airflow-db:
+        condition: service_healthy
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-db:5432/airflow
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./airflow/plugins:/opt/airflow/plugins
+      - ./airflow/init.sh:/init.sh:ro
+    entrypoint: /bin/bash
+    command: ["/init.sh"]
+    networks:
+      - case-study-network
+
+  airflow-webserver:
+    build:
+      context: ./airflow
+      dockerfile: Dockerfile
+
+    container_name: airflow-webserver
+    hostname: airflow-webserver
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-db:5432/airflow
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__WEBSERVER__SECRET_KEY: change-me
+    ports:
+      - "8090:8080"
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./airflow/plugins:/opt/airflow/plugins
+      - ./hadoop/conf/core-site.xml:/opt/airflow/conf/core-site.xml:ro
+      - ./hadoop/conf/hdfs-site.xml:/opt/airflow/conf/hdfs-site.xml:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    command: webserver
+    restart: unless-stopped
+    networks:
+      - case-study-network
+
+  airflow-scheduler:
+    build:
+      context: ./airflow
+      dockerfile: Dockerfile
+
+    container_name: airflow-scheduler
+    hostname: airflow-scheduler
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-db:5432/airflow
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./airflow/plugins:/opt/airflow/plugins
+      - ./hadoop/conf/core-site.xml:/opt/airflow/conf/core-site.xml:ro
+      - ./hadoop/conf/hdfs-site.xml:/opt/airflow/conf/hdfs-site.xml:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    command: scheduler
+    restart: unless-stopped
+    networks:
+      - case-study-network
 
 
 networks:
@@ -261,3 +357,4 @@ volumes:
   namenode_data:
   datanode_data:
   hive_metastore_db_data:
+  airflow_db_data:
