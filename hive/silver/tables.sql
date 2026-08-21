@@ -6,7 +6,7 @@ USE tidaline_silver;
 -- Cleaned and validated ports data from Bronze layer
 -- Business logic applied for supplies_rate and comm_rate
 -- =====================================================================
-CREATE EXTERNAL TABLE tidaline_silver.Silver_Ports (
+CREATE EXTERNAL TABLE IF NOT EXISTS tidaline_silver.Silver_Ports (
     world_port_index_number  DOUBLE COMMENT 'Natural/business key from NGA source',
     main_port_name           VARCHAR(200),
     alternate_port_name      VARCHAR(200),

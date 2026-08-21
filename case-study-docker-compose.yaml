@@ -58,8 +58,8 @@ services:
 
   stream_extractor:
     build:
-      context: ./ingestion/stream
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ingestion/stream/Dockerfile
     container_name: stream_extractor
     depends_on:
       postgres:
@@ -169,7 +169,6 @@ services:
     networks:
       - case-study-network
 
-
   spark:
     image: apache/spark:3.5.3
     container_name: spark
@@ -226,7 +225,7 @@ services:
       namenode:
         condition: service_started
     environment:
-      SKIP_SCHEMA_INIT: "true"
+      IS_RESUME: "true"
       SERVICE_NAME: metastore
       DB_DRIVER: postgres
       SERVICE_OPTS: >-
