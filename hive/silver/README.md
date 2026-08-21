@@ -66,6 +66,37 @@ Gold Layer (Future)
 
 ## Testing
 
+### Error Handling For Now
+
+- If this error came with `hive-metastore` Container
+
+```bash
+Error: ERROR: relation "BUCKETING_COLS" already exists (state=42P07,code=0)
+org.apache.hadoop.hive.metastore.HiveMetaException: Schema initialization FAILED! Metastore state would be inconsistent !!
+Underlying cause: java.io.IOException : Schema script failed, errorcode 2
+Use --verbose for detailed stacktrace.
+*** schemaTool failed ***
+[WARN] Failed to create directory: /home/hive/.beeline
+No such file or directory
++ '[' 1 -eq 0 ']'
++ echo 'Schema initialization failed!'
++ exit 1
+Schema initialization failed!
+
+how to stop recreate this in every restart
+```
+
+### Follow steps to solve
+
+1. `docker compose -f case-study-docker-compose.yaml stop hive-metastore hive-metastore-db`
+2. Find the volume name with : `docker volume ls | findstr hive`
+3. List containers : `docker ps -a --filter volume=tidaline-case-study_hive_metastore_db_data`
+4. Remove everyone using it : `docker rm -f <container_id_or_name>`
+5. Then, remove it : `docker volume rm tidaline-case-study_hive_metastore_db_data`
+6. Finally, recreate the services : `docker compose -f case-study-docker-compose.yaml up -d hive-metastore-db hive-metastore` or `compose up for evryone`
+
+---
+
 ### 1. Create Hive's Warehouse Directory
 
 Create the default Hive warehouse directory in HDFS before creating the Hive database/table:
