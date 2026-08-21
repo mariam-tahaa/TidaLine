@@ -199,12 +199,12 @@ with DAG(
     check_and_clean = BashOperator(
         task_id="check_and_clean_stream_container",
         bash_command=(
-            "if docker inspect airflow_seismic_stream >/dev/null 2>&1; then "
-            "  RUNNING=$(docker inspect -f {{ '{{.State.Running}}' }} airflow_seismic_stream); "
+            "if docker inspect airflow_kafka_to_snowflake >/dev/null 2>&1; then "
+            "  RUNNING=$(docker inspect -f {{ '{{.State.Running}}' }} airflow_kafka_to_snowflake); "
             "  if [ \"$RUNNING\" = \"true\" ]; then "
             "    echo 'Stream already running, skipping restart' && exit 1; "
             "  else "
-            "    echo 'Removing stale container' && docker rm -f airflow_seismic_stream; "
+            "    echo 'Removing stale container' && docker rm -f airflow_kafka_to_snowflake; "
             "  fi; "
             "else "
             "  echo 'No existing container found'; "
@@ -219,21 +219,13 @@ with DAG(
 
     seismic_stream = DockerOperator(
 
-        task_id="seismic_stream",
+        task_id="kafka_to_snowflake",
 
         image=SPARK_IMAGE,
 
-        container_name="airflow_seismic_stream",
+        container_name="airflow_kafka_to_snowflake",
 
         api_version="auto",
-
-        # IMPORTANT:
-        #
-        # The Spark streaming application never finishes
-        # because it uses awaitTermination().
-        #
-        # Therefore we do NOT use auto_remove=True.
-        #
 
         auto_remove=False,
 
@@ -246,15 +238,21 @@ with DAG(
             "--master local[*] "
 
             "--packages "
-            "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.3 "
+            "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.3,"
+            "net.snowflake:snowflake-jdbc:3.16.1,"
+            "net.snowflake:spark-snowflake_2.12:2.16.0-spark_3.4 "
 
             "--conf "
             "spark.sql.streaming.checkpointLocation="
-            "/opt/checkpoints/seismic "
+            "/opt/checkpoints/kafka_to_snowflake "
 
-            "/opt/spark-apps/seismic_stream.py"
+            "/opt/spark-apps/kafka_to_snowflake.py"
 
         ),
+
+        environment={
+            "SNOWFLAKE_PASSWORD": "{{ var.value.snowflake_password }}",
+        },
 
         docker_url="unix://var/run/docker.sock",
 
@@ -262,21 +260,27 @@ with DAG(
 
         mount_tmp_dir=False,
 
-        mounts=SPARK_MOUNTS + [
-
+        mounts=[
             Mount(
-
-                source=(
-                    "D:/ITI/graduation_project/"
-                    "TidaLine/hadoop/checkpoints"
-                ),
-
-                target="/opt/checkpoints",
-
+                source="D:/ITI/graduation_project/TidaLine/spark/jobs",
+                target="/opt/spark-apps",
                 type="bind",
-
+                read_only=True,
             ),
 
+            Mount(
+                source="D:/ITI/graduation_project/TidaLine/utils/logger.py",
+                target="/opt/spark-apps/logger.py",
+                type="bind",
+                read_only=True,
+            ),
+
+            Mount(
+                source="D:/ITI/graduation_project/TidaLine/checkpoints",
+                target="/opt/checkpoints",
+                type="bind",
+                # no read_only flag → writable
+            ),
         ],
 
     )

@@ -481,7 +481,7 @@ parsed_df.writeStream \
     .foreachBatch(write_to_snowflake) \
     .option(
         "checkpointLocation",
-        "file:///opt/spark-apps/checkpoints/kafka_to_snowflake"
+        "file:///opt/checkpoints/kafka_to_snowflake"
     ) \
     .start() \
     .awaitTermination()

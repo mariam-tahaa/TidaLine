@@ -1,5 +1,6 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col
+import os
 
 
 # ============================================================
@@ -7,12 +8,19 @@ from pyspark.sql.functions import col
 # ============================================================
 
 KAFKA_BOOTSTRAP_SERVERS = "kafka:29092"
-
 TOPIC_NAME = "earthquicks-cdc.public.earthquakes"
+CHECKPOINT_PATH = "/checkpoints/kafka_to_snowflake"
 
-BRONZE_PATH = "/bronze/seismic"
+SNOWFLAKE_OPTIONS = {
+    "sfURL": "AZZKOPF-FI96094.snowflakecomputing.com",
+    "sfUser": "itiGrad",
+    "sfPassword": os.environ["SNOWFLAKE_PASSWORD"],
+    "sfDatabase": "MARITIME_LOGISTICS",
+    "sfSchema": "PUBLIC",
+    "sfWarehouse": os.environ.get("SNOWFLAKE_WAREHOUSE", "COMPUTE_WH"),
+    "dbtable": "EARTHQUAKES_REALTIME",
+}
 
-CHECKPOINT_PATH = "/checkpoints/seismic"
 
 # ============================================================
 # Spark Session
@@ -20,7 +28,7 @@ CHECKPOINT_PATH = "/checkpoints/seismic"
 
 spark = (
     SparkSession.builder
-    .appName("TidaLine-Seismic-Realtime")
+    .appName("Kafka-To-Snowflake")
     .getOrCreate()
 )
 
@@ -34,68 +42,53 @@ spark.sparkContext.setLogLevel("WARN")
 raw_stream = (
     spark.readStream
     .format("kafka")
-    .option(
-        "kafka.bootstrap.servers",
-        KAFKA_BOOTSTRAP_SERVERS,
-    )
-    .option(
-        "subscribe",
-        TOPIC_NAME,
-    )
-    .option(
-        "startingOffsets",
-        "latest",
-    )
-    .option(
-        "failOnDataLoss",
-        "false",
-    )
+    .option("kafka.bootstrap.servers", KAFKA_BOOTSTRAP_SERVERS)
+    .option("subscribe", TOPIC_NAME)
+    .option("startingOffsets", "latest")
+    .option("failOnDataLoss", "false")
     .load()
 )
 
 
 # ============================================================
-# Convert Kafka message
+# TODO: parse the Kafka `value` JSON into the real earthquake
+# columns here, matching EARTHQUAKES_REALTIME's schema
+# (this is the piece we still need DESCRIBE TABLE for)
 # ============================================================
 
-bronze_stream = (
+parsed_stream = (
     raw_stream
     .select(
-        col("timestamp").alias("kafka_timestamp"),
-        col("partition"),
-        col("offset"),
-        col("key").cast("string").alias("key"),
-        col("value").cast("string").alias("value"),
+        col("value").cast("string").alias("json_str")
     )
+    # .withColumn("parsed", from_json(col("json_str"), earthquake_schema))
+    # .select("parsed.*")
 )
 
 
 # ============================================================
-# Write Bronze
+# Write to Snowflake via foreachBatch
 # ============================================================
 
-query = (
-    bronze_stream
+def write_to_snowflake(batch_df, batch_id):
+    if batch_df.rdd.isEmpty():
+        return
+    (
+        batch_df.write
+        .format("net.snowflake.spark.snowflake")
+        .options(**SNOWFLAKE_OPTIONS)
+        .mode("append")
+        .save()
+    )
+
+
+snowflake_query = (
+    parsed_stream
     .writeStream
-    .format("parquet")
-    .outputMode("append")
-    .option(
-        "path",
-        BRONZE_PATH,
-    )
-    .option(
-        "checkpointLocation",
-        CHECKPOINT_PATH,
-    )
-    .trigger(
-        processingTime="10 seconds"
-    )
+    .foreachBatch(write_to_snowflake)
+    .option("checkpointLocation", CHECKPOINT_PATH)
+    .trigger(processingTime="10 seconds")
     .start()
 )
 
-
-# ============================================================
-# Keep streaming application alive
-# ============================================================
-
-query.awaitTermination()
+snowflake_query.awaitTermination()
