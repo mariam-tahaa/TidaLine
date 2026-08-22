@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
+	<info organisation="io.airlift"
+		module="airbase"
+		revision="112"
+		status="release"
+		publication="20210618232513"
+	>
+		<license name="Apache License 2.0" url="http://www.apache.org/licenses/LICENSE-2.0" />
+		<description homepage="https://github.com/airlift/airbase">
+		Base POM for Airlift
+		</description>
+		<m:properties__air.repository.release.url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</m:properties__air.repository.release.url>
+		<m:properties__air.build.jvmsize>1024m</m:properties__air.build.jvmsize>
+		<m:properties__dep.jackson.version>2.12.3</m:properties__dep.jackson.version>
+		<m:properties__dep.joda.version>2.10.10</m:properties__dep.joda.version>
+		<m:properties__project.report.inputEncoding>UTF-8</m:properties__project.report.inputEncoding>
+		<m:properties__air.main.basedir>${project.basedir}</m:properties__air.main.basedir>
+		<m:properties__project.report.outputEncoding>UTF-8</m:properties__project.report.outputEncoding>
+		<m:properties__dep.testng.version>6.10</m:properties__dep.testng.version>
+		<m:properties__project.build.targetJdk>8</m:properties__project.build.targetJdk>
+		<m:properties__dep.spotbugs-annotations.version>4.2.3</m:properties__dep.spotbugs-annotations.version>
+		<m:properties__air.check.skip-duplicate-finder>${air.check.skip-basic}</m:properties__air.check.skip-duplicate-finder>
+		<m:properties__dep.logback.version>1.2.3</m:properties__dep.logback.version>
+		<m:properties__air.test.thread-count>1</m:properties__air.test.thread-count>
+		<m:properties__air.check.skip-license>${air.check.skip-extended}</m:properties__air.check.skip-license>
+		<m:properties__dep.assertj-core.version>3.18.1</m:properties__dep.assertj-core.version>
+		<m:properties__air.check.fail-pmd>${air.check.fail-extended}</m:properties__air.check.fail-pmd>
+		<m:properties__dep.packaging.version>0.163</m:properties__dep.packaging.version>
+		<m:properties__air.license.owner>${project.organization.name}</m:properties__air.license.owner>
+		<m:properties__air.check.skip-pmd>${air.check.skip-extended}</m:properties__air.check.skip-pmd>
+		<m:properties__air.license.ensure-match>Copyright \(C\) \d{4} .+</m:properties__air.license.ensure-match>
+		<m:properties__dep.jmh.version>1.20</m:properties__dep.jmh.version>
+		<m:properties__air.check.skip-all>false</m:properties__air.check.skip-all>
+		<m:properties__dep.plugin.surefire.version>3.0.0-M5</m:properties__dep.plugin.surefire.version>
+		<m:properties__air.readme.file>README.txt</m:properties__air.readme.file>
+		<m:properties__air.release.auto-version-submodules>true</m:properties__air.release.auto-version-submodules>
+		<m:properties__dep.slf4j.version>1.7.30</m:properties__dep.slf4j.version>
+		<m:properties__air.release.tag-name-format>@{project.version}</m:properties__air.release.tag-name-format>
+		<m:properties__air.check.skip-extended>${air.check.skip-all}</m:properties__air.check.skip-extended>
+		<m:properties__air.check.fail-extended>${air.check.fail-all}</m:properties__air.check.fail-extended>
+		<m:properties__dep.javax-inject.version>1</m:properties__dep.javax-inject.version>
+		<m:properties__air.javadoc.lint>all</m:properties__air.javadoc.lint>
+		<m:properties__dep.junit.version>5.8.0-M1</m:properties__dep.junit.version>
+		<m:properties__air.check.fail-all>true</m:properties__air.check.fail-all>
+		<m:properties__air.check.fail-duplicate-finder>${air.check.fail-basic}</m:properties__air.check.fail-duplicate-finder>
+		<m:properties__air.check.fail-license>${air.check.fail-extended}</m:properties__air.check.fail-license>
+		<m:properties__dep.bval.version>2.0.5</m:properties__dep.bval.version>
+		<m:properties__air.maven.version>3.6.3</m:properties__air.maven.version>
+		<m:properties__dep.jmxutils.version>1.21</m:properties__dep.jmxutils.version>
+		<m:properties__air.test.jvmsize>${air.build.jvmsize}</m:properties__air.test.jvmsize>
+		<m:properties__air.check.skip-checkstyle>${air.check.skip-extended}</m:properties__air.check.skip-checkstyle>
+		<m:properties__air.check.fail-basic>${air.check.fail-all}</m:properties__air.check.fail-basic>
+		<m:properties__air.check.fail-dependency>${air.check.fail-basic}</m:properties__air.check.fail-dependency>
+		<m:properties__air.test.language>en</m:properties__air.test.language>
+		<m:properties__air.test.region>US</m:properties__air.test.region>
+		<m:properties__air.license.default-value>Copyright (C) ${project.inceptionYear} ${air.license.owner}</m:properties__air.license.default-value>
+		<m:properties__air.java.version>11</m:properties__air.java.version>
+		<m:properties__air.test.jvm.additional-arguments/>
+		<m:properties__air.check.skip-jacoco>${air.check.skip-extended}</m:properties__air.check.skip-jacoco>
+		<m:properties__air.release.preparation-goals>clean install</m:properties__air.release.preparation-goals>
+		<m:properties__project.build.sourceEncoding>UTF-8</m:properties__project.build.sourceEncoding>
+		<m:properties__dep.javax-validation.version>2.0.1.Final</m:properties__dep.javax-validation.version>
+		<m:properties__dep.plugin.scm.version>1.8.1</m:properties__dep.plugin.scm.version>
+		<m:properties__air.compiler.fail-warnings>false</m:properties__air.compiler.fail-warnings>
+		<m:properties__air.check.fail-dependency-scope>${air.check.fail-basic}</m:properties__air.check.fail-dependency-scope>
+		<m:properties__air.repository.snapshot.id>ossrh</m:properties__air.repository.snapshot.id>
+		<m:properties__air.check.skip-basic>${air.check.skip-all}</m:properties__air.check.skip-basic>
+		<m:properties__air.checkstyle.config-file>checkstyle/airbase-checks.xml</m:properties__air.checkstyle.config-file>
+		<m:properties__air.modernizer.java-version>${project.build.targetJdk}</m:properties__air.modernizer.java-version>
+		<m:properties__air.check.skip-enforcer>${air.check.skip-basic}</m:properties__air.check.skip-enforcer>
+		<m:properties__air.readme.type>txt</m:properties__air.readme.type>
+		<m:properties__air.check.skip-dependency>${air.check.skip-basic}</m:properties__air.check.skip-dependency>
+		<m:properties__air.check.fail-enforcer>${air.check.fail-basic}</m:properties__air.check.fail-enforcer>
+		<m:properties__air.repository.release.id>ossrh</m:properties__air.repository.release.id>
+		<m:properties__air.release.push-changes>false</m:properties__air.release.push-changes>
+		<m:properties__air.test.parallel/>
+		<m:properties__air.check.fail-modernizer>${air.check.fail-extended}</m:properties__air.check.fail-modernizer>
+		<m:properties__dep.guava.version>30.1.1-jre</m:properties__dep.guava.version>
+		<m:properties__air.release.release-profiles>oss-release</m:properties__air.release.release-profiles>
+		<m:properties__air.check.skip-spotbugs>${air.check.skip-extended}</m:properties__air.check.skip-spotbugs>
+		<m:properties__air.repository.snapshot.url>https://oss.sonatype.org/content/repositories/snapshots</m:properties__air.repository.snapshot.url>
+		<m:properties__air.check.fail-spotbugs>${air.check.fail-extended}</m:properties__air.check.fail-spotbugs>
+		<m:properties__dep.guice.version>5.0.1</m:properties__dep.guice.version>
+		<m:properties__dep.slice.version>0.39</m:properties__dep.slice.version>
+		<m:properties__air.check.fail-checkstyle>${air.check.fail-basic}</m:properties__air.check.fail-checkstyle>
+		<m:properties__air.license.header-file>license/apache-header.txt</m:properties__air.license.header-file>
+		<m:properties__air.repository.release.name>Sonatype Release Snapshots</m:properties__air.repository.release.name>
+		<m:properties__air.test.timezone>UTC</m:properties__air.test.timezone>
+		<m:properties__dep.javax-servlet.version>4.0.1</m:properties__dep.javax-servlet.version>
+		<m:properties__air.repository.snapshot.name>Sonatype Nexus Snapshots</m:properties__air.repository.snapshot.name>
+		<m:properties__air.check.skip-modernizer>${air.check.skip-extended}</m:properties__air.check.skip-modernizer>
+		<m:properties__air.check.skip-dependency-scope>${air.check.skip-basic}</m:properties__air.check.skip-dependency-scope>
+		<m:dependency.management__com.google.inject__guice__version>5.0.1</m:dependency.management__com.google.inject__guice__version>
+		<m:dependency.management__com.google.inject.extensions__guice-servlet__version>5.0.1</m:dependency.management__com.google.inject.extensions__guice-servlet__version>
+		<m:dependency.management__com.google.inject.extensions__guice-assistedinject__version>5.0.1</m:dependency.management__com.google.inject.extensions__guice-assistedinject__version>
+		<m:dependency.management__com.google.inject.extensions__guice-throwingproviders__version>5.0.1</m:dependency.management__com.google.inject.extensions__guice-throwingproviders__version>
+		<m:dependency.management__com.google.guava__guava__version>30.1.1-jre</m:dependency.management__com.google.guava__guava__version>
+		<m:dependency.management__com.google.guava__guava__exclusion_0>com.google.guava__listenablefuture</m:dependency.management__com.google.guava__guava__exclusion_0>
+		<m:dependency.management__javax.inject__javax.inject__version>1</m:dependency.management__javax.inject__javax.inject__version>
+		<m:dependency.management__javax.servlet__javax.servlet-api__version>4.0.1</m:dependency.management__javax.servlet__javax.servlet-api__version>
+		<m:dependency.management__javax.validation__validation-api__version>2.0.1.Final</m:dependency.management__javax.validation__validation-api__version>
+		<m:dependency.management__org.slf4j__slf4j-api__version>1.7.30</m:dependency.management__org.slf4j__slf4j-api__version>
+		<m:dependency.management__org.slf4j__slf4j-nop__version>1.7.30</m:dependency.management__org.slf4j__slf4j-nop__version>
+		<m:dependency.management__org.slf4j__slf4j-simple__version>1.7.30</m:dependency.management__org.slf4j__slf4j-simple__version>
+		<m:dependency.management__org.slf4j__slf4j-ext__version>1.7.30</m:dependency.management__org.slf4j__slf4j-ext__version>
+		<m:dependency.management__org.slf4j__jcl-over-slf4j__version>1.7.30</m:dependency.management__org.slf4j__jcl-over-slf4j__version>
+		<m:dependency.management__org.slf4j__jul-to-slf4j__version>1.7.30</m:dependency.management__org.slf4j__jul-to-slf4j__version>
+		<m:dependency.management__org.slf4j__log4j-over-slf4j__version>1.7.30</m:dependency.management__org.slf4j__log4j-over-slf4j__version>
+		<m:dependency.management__org.slf4j__slf4j-jdk14__version>1.7.30</m:dependency.management__org.slf4j__slf4j-jdk14__version>
+		<m:dependency.management__ch.qos.logback__logback-core__version>1.2.3</m:dependency.management__ch.qos.logback__logback-core__version>
+		<m:dependency.management__ch.qos.logback__logback-classic__version>1.2.3</m:dependency.management__ch.qos.logback__logback-classic__version>
+		<m:dependency.management__javax.ws.rs__javax.ws.rs-api__version>2.1</m:dependency.management__javax.ws.rs__javax.ws.rs-api__version>
+		<m:dependency.management__javax.annotation__javax.annotation-api__version>1.3.2</m:dependency.management__javax.annotation__javax.annotation-api__version>
+		<m:dependency.management__com.fasterxml.jackson.core__jackson-annotations__version>2.12.3</m:dependency.management__com.fasterxml.jackson.core__jackson-annotations__version>
+		<m:dependency.management__com.fasterxml.jackson.core__jackson-core__version>2.12.3</m:dependency.management__com.fasterxml.jackson.core__jackson-core__version>
+		<m:dependency.management__com.fasterxml.jackson.core__jackson-databind__version>2.12.3</m:dependency.management__com.fasterxml.jackson.core__jackson-databind__version>
+		<m:dependency.management__com.fasterxml.jackson.module__jackson-module-parameter-names__version>2.12.3</m:dependency.management__com.fasterxml.jackson.module__jackson-module-parameter-names__version>
+		<m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-jdk8__version>2.12.3</m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-jdk8__version>
+		<m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-jsr310__version>2.12.3</m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-jsr310__version>
+		<m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-guava__version>2.12.3</m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-guava__version>
+		<m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-joda__version>2.12.3</m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-joda__version>
+		<m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-yaml__version>2.12.3</m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-yaml__version>
+		<m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-smile__version>2.12.3</m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-smile__version>
+		<m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-cbor__version>2.12.3</m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-cbor__version>
+		<m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-ion__version>2.12.3</m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-ion__version>
+		<m:dependency.management__org.apache.bval__bval-jsr__version>2.0.5</m:dependency.management__org.apache.bval__bval-jsr__version>
+		<m:dependency.management__org.weakref__jmxutils__version>1.21</m:dependency.management__org.weakref__jmxutils__version>
+		<m:dependency.management__joda-time__joda-time__version>2.10.10</m:dependency.management__joda-time__joda-time__version>
+		<m:dependency.management__com.github.spotbugs__spotbugs-annotations__version>4.2.3</m:dependency.management__com.github.spotbugs__spotbugs-annotations__version>
+		<m:dependency.management__com.google.code.findbugs__jsr305__version>3.0.2</m:dependency.management__com.google.code.findbugs__jsr305__version>
+		<m:dependency.management__org.openjdk.jmh__jmh-core__version>1.20</m:dependency.management__org.openjdk.jmh__jmh-core__version>
+		<m:dependency.management__org.openjdk.jmh__jmh-generator-annprocess__version>1.20</m:dependency.management__org.openjdk.jmh__jmh-generator-annprocess__version>
+		<m:dependency.management__org.testng__testng__version>6.10</m:dependency.management__org.testng__testng__version>
+		<m:dependency.management__org.testng__testng__exclusion_0>junit__junit</m:dependency.management__org.testng__testng__exclusion_0>
+		<m:dependency.management__org.testng__testng__exclusion_1>com.google.inject__guice</m:dependency.management__org.testng__testng__exclusion_1>
+		<m:dependency.management__org.junit.jupiter__junit-jupiter__version>5.8.0-M1</m:dependency.management__org.junit.jupiter__junit-jupiter__version>
+		<m:dependency.management__org.junit.jupiter__junit-jupiter-api__version>5.8.0-M1</m:dependency.management__org.junit.jupiter__junit-jupiter-api__version>
+		<m:dependency.management__org.junit.jupiter__junit-jupiter-engine__version>5.8.0-M1</m:dependency.management__org.junit.jupiter__junit-jupiter-engine__version>
+		<m:dependency.management__org.junit.jupiter__junit-jupiter-migrationsupport__version>5.8.0-M1</m:dependency.management__org.junit.jupiter__junit-jupiter-migrationsupport__version>
+		<m:dependency.management__org.junit.jupiter__junit-jupiter-params__version>5.8.0-M1</m:dependency.management__org.junit.jupiter__junit-jupiter-params__version>
+		<m:dependency.management__org.junit.platform__junit-platform-commons__version>1.8.0-M1</m:dependency.management__org.junit.platform__junit-platform-commons__version>
+		<m:dependency.management__org.junit.platform__junit-platform-console__version>1.8.0-M1</m:dependency.management__org.junit.platform__junit-platform-console__version>
+		<m:dependency.management__org.junit.platform__junit-platform-engine__version>1.8.0-M1</m:dependency.management__org.junit.platform__junit-platform-engine__version>
+		<m:dependency.management__org.junit.platform__junit-platform-jfr__version>1.8.0-M1</m:dependency.management__org.junit.platform__junit-platform-jfr__version>
+		<m:dependency.management__org.junit.platform__junit-platform-launcher__version>1.8.0-M1</m:dependency.management__org.junit.platform__junit-platform-launcher__version>
+		<m:dependency.management__org.junit.platform__junit-platform-reporting__version>1.8.0-M1</m:dependency.management__org.junit.platform__junit-platform-reporting__version>
+		<m:dependency.management__org.junit.platform__junit-platform-runner__version>1.8.0-M1</m:dependency.management__org.junit.platform__junit-platform-runner__version>
+		<m:dependency.management__org.junit.platform__junit-platform-suite__version>1.8.0-M1</m:dependency.management__org.junit.platform__junit-platform-suite__version>
+		<m:dependency.management__org.junit.platform__junit-platform-suite-api__version>1.8.0-M1</m:dependency.management__org.junit.platform__junit-platform-suite-api__version>
+		<m:dependency.management__org.junit.platform__junit-platform-suite-commons__version>1.8.0-M1</m:dependency.management__org.junit.platform__junit-platform-suite-commons__version>
+		<m:dependency.management__org.junit.platform__junit-platform-suite-engine__version>1.8.0-M1</m:dependency.management__org.junit.platform__junit-platform-suite-engine__version>
+		<m:dependency.management__org.junit.platform__junit-platform-testkit__version>1.8.0-M1</m:dependency.management__org.junit.platform__junit-platform-testkit__version>
+		<m:dependency.management__org.junit.vintage__junit-vintage-engine__version>5.8.0-M1</m:dependency.management__org.junit.vintage__junit-vintage-engine__version>
+		<m:dependency.management__org.assertj__assertj-core__version>3.18.1</m:dependency.management__org.assertj__assertj-core__version>
+		<m:dependency.management__io.airlift__slice__version>0.39</m:dependency.management__io.airlift__slice__version>
+		<m:maven.plugins>org.apache.maven.plugins__maven-compiler-plugin__null|org.apache.maven.plugins__maven-resources-plugin__null|org.apache.maven.plugins__maven-jar-plugin__null|org.apache.maven.plugins__maven-source-plugin__null|org.apache.maven.plugins__maven-assembly-plugin__null|org.apache.maven.plugins__maven-surefire-plugin__null|org.apache.maven.plugins__maven-release-plugin__null|org.apache.maven.plugins__maven-enforcer-plugin__null|org.apache.maven.plugins__maven-dependency-plugin__null|org.basepom.maven__duplicate-finder-maven-plugin__null|com.github.spotbugs__spotbugs-maven-plugin__null|com.hubspot.maven.plugins__dependency-scope-maven-plugin__null|org.apache.maven.plugins__maven-pmd-plugin__null|com.mycila__license-maven-plugin__null|org.jacoco__jacoco-maven-plugin__null|org.gaul__modernizer-maven-plugin__null|org.apache.maven.plugins__maven-checkstyle-plugin__null|pl.project13.maven__git-commit-id-plugin__null</m:maven.plugins>
+	</info>
+	<configurations>
+		<conf name="default" visibility="public" description="runtime dependencies and master artifact can be used with this conf" extends="runtime,master"/>
+		<conf name="master" visibility="public" description="contains only the artifact published by this module itself, with no transitive dependencies"/>
+		<conf name="compile" visibility="public" description="this is the default scope, used if none is specified. Compile dependencies are available in all classpaths."/>
+		<conf name="provided" visibility="public" description="this is much like compile, but indicates you expect the JDK or a container to provide it. It is only available on the compilation classpath, and is not transitive."/>
+		<conf name="runtime" visibility="public" description="this scope indicates that the dependency is not required for compilation, but is for execution. It is in the runtime and test classpaths, but not the compile classpath." extends="compile"/>
+		<conf name="test" visibility="public" description="this scope indicates that the dependency is not required for normal use of the application, and is only available for the test compilation and execution phases." extends="runtime"/>
+		<conf name="system" visibility="public" description="this scope is similar to provided except that you have to provide the JAR which contains it explicitly. The artifact is always available and is not looked up in a repository."/>
+		<conf name="sources" visibility="public" description="this configuration contains the source artifact of this module, if any."/>
+		<conf name="javadoc" visibility="public" description="this configuration contains the javadoc artifact of this module, if any."/>
+		<conf name="optional" visibility="public" description="contains all optional dependencies"/>
+	</configurations>
+	<publications>
+	</publications>
+</ivy-module>

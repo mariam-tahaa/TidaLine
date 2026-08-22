@@ -42,7 +42,9 @@ with DAG(
                   target="/opt/spark/conf/hdfs-site.xml", type="bind", read_only=True),
             Mount(source="D:/ITI/graduation_project/TidaLine/hive/conf/hive-site.xml",
                   target="/opt/spark/conf/hive-site.xml", type="bind", read_only=True),
-        ],
+            Mount(source="D:/ITI/graduation_project/TidaLine/spark/ivy-cache",
+                  target="/tmp/.ivy2", type="bind", read_only=False),  # <-- add this
+            ],
     )
 
     snowflake_to_hdfs

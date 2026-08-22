@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
+	<info organisation="org.apache.avro"
+		module="avro-parent"
+		revision="1.11.4"
+		status="release"
+		publication="20240819200929"
+	>
+		<license name="Apache-2.0" url="https://www.apache.org/licenses/LICENSE-2.0.txt" />
+		<description homepage="https://avro.apache.org">
+		Avro parent Java project
+		</description>
+		<m:properties__jackson-bom.version>2.14.3</m:properties__jackson-bom.version>
+		<m:properties__tukaani.version>1.9</m:properties__tukaani.version>
+		<m:properties__reload4j.version>1.2.25</m:properties__reload4j.version>
+		<m:properties__netty.version>4.1.107.Final</m:properties__netty.version>
+		<m:properties__junit5.version>5.10.2</m:properties__junit5.version>
+		<m:properties__jetty.version>9.4.54.v20240208</m:properties__jetty.version>
+		<m:properties__snappy.version>1.1.10.5</m:properties__snappy.version>
+		<m:properties__hamcrest.version>2.2</m:properties__hamcrest.version>
+		<m:properties__hadoop.version>3.3.6</m:properties__hadoop.version>
+		<m:properties__archetype-plugin.version>3.2.1</m:properties__archetype-plugin.version>
+		<m:properties__javacc-plugin.version>3.0.3</m:properties__javacc-plugin.version>
+		<m:properties__main.basedir>${project.parent.basedir}</m:properties__main.basedir>
+		<m:properties__zstd-jni.version>1.5.5-5</m:properties__zstd-jni.version>
+		<m:properties__maven-core.version>3.3.9</m:properties__maven-core.version>
+		<m:properties__slf4j.version>1.7.36</m:properties__slf4j.version>
+		<m:properties__maven-antrun-plugin.version>3.1.0</m:properties__maven-antrun-plugin.version>
+		<m:properties__servlet-api.version>4.0.1</m:properties__servlet-api.version>
+		<m:properties__exec-plugin.version>3.2.0</m:properties__exec-plugin.version>
+		<m:properties__protobuf.version>3.25.3</m:properties__protobuf.version>
+		<m:properties__grpc.version>1.62.2</m:properties__grpc.version>
+		<m:properties__file-management.version>3.1.0</m:properties__file-management.version>
+		<m:properties__jopt-simple.version>5.0.4</m:properties__jopt-simple.version>
+		<m:properties__javacc.version>7.0.13</m:properties__javacc.version>
+		<m:properties__commons-cli.version>1.6.0</m:properties__commons-cli.version>
+		<m:properties__mockito.version>4.11.0</m:properties__mockito.version>
+		<m:properties__commons-compress.version>1.26.2</m:properties__commons-compress.version>
+		<m:properties__thrift.version>0.16.0</m:properties__thrift.version>
+		<m:properties__ant.version>1.10.14</m:properties__ant.version>
+		<m:properties__commons-text.version>1.10.0</m:properties__commons-text.version>
+		<m:properties__bundle-plugin-version>5.1.9</m:properties__bundle-plugin-version>
+		<m:properties__cyclonedx-maven-plugin.version>2.7.11</m:properties__cyclonedx-maven-plugin.version>
+		<m:properties__velocity.version>2.3</m:properties__velocity.version>
+		<m:properties__maven-remote-resources-plugin.version>3.1.0</m:properties__maven-remote-resources-plugin.version>
+		<m:properties__checkstyle-plugin.version>3.3.1</m:properties__checkstyle-plugin.version>
+		<m:properties__maven.compiler.source>1.8</m:properties__maven.compiler.source>
+		<m:properties__apache-rat-plugin.version>0.16.1</m:properties__apache-rat-plugin.version>
+		<m:properties__maven-source-plugin.version>3.3.0</m:properties__maven-source-plugin.version>
+		<m:properties__maven-gpg-plugin.version>3.1.0</m:properties__maven-gpg-plugin.version>
+		<m:properties__maven-plugin-plugin.version>3.11.0</m:properties__maven-plugin-plugin.version>
+		<m:properties__maven-shade-plugin.version>3.5.2</m:properties__maven-shade-plugin.version>
+		<m:properties__extra-enforcer-rules.version>1.8.0</m:properties__extra-enforcer-rules.version>
+		<m:properties__enforcer-plugin.version>3.3.0</m:properties__enforcer-plugin.version>
+		<m:properties__plugin-tools-javadoc.version>3.5.2</m:properties__plugin-tools-javadoc.version>
+		<m:properties__spotless-maven-plugin.version>2.27.2</m:properties__spotless-maven-plugin.version>
+		<m:properties__maven.compiler.target>1.8</m:properties__maven.compiler.target>
+		<m:properties__checkstyle.version>9.3</m:properties__checkstyle.version>
+		<m:properties__maven-javadoc-plugin.version>3.6.3</m:properties__maven-javadoc-plugin.version>
+		<m:properties__maven-surefire-plugin.version>3.2.5</m:properties__maven-surefire-plugin.version>
+		<m:properties__project.build.outputTimestamp>1723820671</m:properties__project.build.outputTimestamp>
+		<m:properties__avro.docDir>build/avro-doc-${project.version}/api</m:properties__avro.docDir>
+		<m:properties__avro.distDir>dist</m:properties__avro.distDir>
+		<m:properties__distMgmtReleasesName>Apache Release Distribution Repository</m:properties__distMgmtReleasesName>
+		<m:properties__distMgmtReleasesUrl>https://repository.apache.org/service/local/staging/deploy/maven2</m:properties__distMgmtReleasesUrl>
+		<m:properties__minimalJavaBuildVersion>1.8</m:properties__minimalJavaBuildVersion>
+		<m:properties__maven.plugin.tools.version>3.7.0</m:properties__maven.plugin.tools.version>
+		<m:properties__distMgmtSnapshotsUrl>https://repository.apache.org/content/repositories/snapshots</m:properties__distMgmtSnapshotsUrl>
+		<m:properties__minimalMavenBuildVersion>3.2.5</m:properties__minimalMavenBuildVersion>
+		<m:properties__project.reporting.outputEncoding>UTF-8</m:properties__project.reporting.outputEncoding>
+		<m:properties__surefire.version>2.22.2</m:properties__surefire.version>
+		<m:properties__sourceReleaseAssemblyDescriptor>source-release</m:properties__sourceReleaseAssemblyDescriptor>
+		<m:properties__organization.logo>https://www.apache.org/images/asf_logo_wide_2016.png</m:properties__organization.logo>
+		<m:properties__project.build.sourceEncoding>UTF-8</m:properties__project.build.sourceEncoding>
+		<m:properties__gpg.useagent>true</m:properties__gpg.useagent>
+		<m:properties__distMgmtSnapshotsName>Apache Development Snapshot Repository</m:properties__distMgmtSnapshotsName>
+		<m:properties__assembly.tarLongFileMode>posix</m:properties__assembly.tarLongFileMode>
+		<m:dependency.management__org.apache.maven.plugin-tools__maven-plugin-annotations__version>3.7.0</m:dependency.management__org.apache.maven.plugin-tools__maven-plugin-annotations__version>
+		<m:maven.plugins>org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-enforcer-plugin__null|org.apache.maven.plugins__maven-site-plugin__null|org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-enforcer-plugin__null|org.apache.maven.plugins__maven-site-plugin__null|org.apache.maven.plugins__maven-enforcer-plugin__3.3.0|org.apache.maven.plugins__maven-plugin-plugin__null|org.apache.rat__apache-rat-plugin__null|org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-enforcer-plugin__null|org.apache.maven.plugins__maven-site-plugin__null|org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-enforcer-plugin__null|org.apache.maven.plugins__maven-site-plugin__null|org.apache.maven.plugins__maven-enforcer-plugin__3.3.0|org.apache.maven.plugins__maven-plugin-plugin__null|org.apache.rat__apache-rat-plugin__null|org.apache.felix__maven-bundle-plugin__5.1.9|org.apache.maven.plugins__maven-checkstyle-plugin__null|com.diffplug.spotless__spotless-maven-plugin__null|org.cyclonedx__cyclonedx-maven-plugin__null</m:maven.plugins>
+		<m:dependency.management__com.fasterxml.jackson.core__jackson-annotations__version>2.14.3</m:dependency.management__com.fasterxml.jackson.core__jackson-annotations__version>
+		<m:dependency.management__com.fasterxml.jackson.core__jackson-core__version>2.14.3</m:dependency.management__com.fasterxml.jackson.core__jackson-core__version>
+		<m:dependency.management__com.fasterxml.jackson.core__jackson-databind__version>2.14.3</m:dependency.management__com.fasterxml.jackson.core__jackson-databind__version>
+		<m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-avro__version>2.14.3</m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-avro__version>
+		<m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-cbor__version>2.14.3</m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-cbor__version>
+		<m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-csv__version>2.14.3</m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-csv__version>
+		<m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-ion__version>2.14.3</m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-ion__version>
+		<m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-properties__version>2.14.3</m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-properties__version>
+		<m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-protobuf__version>2.14.3</m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-protobuf__version>
+		<m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-smile__version>2.14.3</m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-smile__version>
+		<m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-toml__version>2.14.3</m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-toml__version>
+		<m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-xml__version>2.14.3</m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-xml__version>
+		<m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-yaml__version>2.14.3</m:dependency.management__com.fasterxml.jackson.dataformat__jackson-dataformat-yaml__version>
+		<m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-eclipse-collections__version>2.14.3</m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-eclipse-collections__version>
+		<m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-guava__version>2.14.3</m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-guava__version>
+		<m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-hibernate4__version>2.14.3</m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-hibernate4__version>
+		<m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-hibernate5__version>2.14.3</m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-hibernate5__version>
+		<m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-hibernate5-jakarta__version>2.14.3</m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-hibernate5-jakarta__version>
+		<m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-hppc__version>2.14.3</m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-hppc__version>
+		<m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-jakarta-jsonp__version>2.14.3</m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-jakarta-jsonp__version>
+		<m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-jaxrs__version>2.14.3</m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-jaxrs__version>
+		<m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-joda__version>2.14.3</m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-joda__version>
+		<m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-joda-money__version>2.14.3</m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-joda-money__version>
+		<m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-jdk8__version>2.14.3</m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-jdk8__version>
+		<m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-json-org__version>2.14.3</m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-json-org__version>
+		<m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-jsr310__version>2.14.3</m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-jsr310__version>
+		<m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-jsr353__version>2.14.3</m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-jsr353__version>
+		<m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-pcollections__version>2.14.3</m:dependency.management__com.fasterxml.jackson.datatype__jackson-datatype-pcollections__version>
+		<m:dependency.management__com.fasterxml.jackson.jaxrs__jackson-jaxrs-base__version>2.14.3</m:dependency.management__com.fasterxml.jackson.jaxrs__jackson-jaxrs-base__version>
+		<m:dependency.management__com.fasterxml.jackson.jaxrs__jackson-jaxrs-cbor-provider__version>2.14.3</m:dependency.management__com.fasterxml.jackson.jaxrs__jackson-jaxrs-cbor-provider__version>
+		<m:dependency.management__com.fasterxml.jackson.jaxrs__jackson-jaxrs-json-provider__version>2.14.3</m:dependency.management__com.fasterxml.jackson.jaxrs__jackson-jaxrs-json-provider__version>
+		<m:dependency.management__com.fasterxml.jackson.jaxrs__jackson-jaxrs-smile-provider__version>2.14.3</m:dependency.management__com.fasterxml.jackson.jaxrs__jackson-jaxrs-smile-provider__version>
+		<m:dependency.management__com.fasterxml.jackson.jaxrs__jackson-jaxrs-xml-provider__version>2.14.3</m:dependency.management__com.fasterxml.jackson.jaxrs__jackson-jaxrs-xml-provider__version>
+		<m:dependency.management__com.fasterxml.jackson.jaxrs__jackson-jaxrs-yaml-provider__version>2.14.3</m:dependency.management__com.fasterxml.jackson.jaxrs__jackson-jaxrs-yaml-provider__version>
+		<m:dependency.management__com.fasterxml.jackson.jakarta.rs__jackson-jakarta-rs-base__version>2.14.3</m:dependency.management__com.fasterxml.jackson.jakarta.rs__jackson-jakarta-rs-base__version>
+		<m:dependency.management__com.fasterxml.jackson.jakarta.rs__jackson-jakarta-rs-cbor-provider__version>2.14.3</m:dependency.management__com.fasterxml.jackson.jakarta.rs__jackson-jakarta-rs-cbor-provider__version>
+		<m:dependency.management__com.fasterxml.jackson.jakarta.rs__jackson-jakarta-rs-json-provider__version>2.14.3</m:dependency.management__com.fasterxml.jackson.jakarta.rs__jackson-jakarta-rs-json-provider__version>
+		<m:dependency.management__com.fasterxml.jackson.jakarta.rs__jackson-jakarta-rs-smile-provider__version>2.14.3</m:dependency.management__com.fasterxml.jackson.jakarta.rs__jackson-jakarta-rs-smile-provider__version>
+		<m:dependency.management__com.fasterxml.jackson.jakarta.rs__jackson-jakarta-rs-xml-provider__version>2.14.3</m:dependency.management__com.fasterxml.jackson.jakarta.rs__jackson-jakarta-rs-xml-provider__version>
+		<m:dependency.management__com.fasterxml.jackson.jakarta.rs__jackson-jakarta-rs-yaml-provider__version>2.14.3</m:dependency.management__com.fasterxml.jackson.jakarta.rs__jackson-jakarta-rs-yaml-provider__version>
+		<m:dependency.management__com.fasterxml.jackson.jr__jackson-jr-all__version>2.14.3</m:dependency.management__com.fasterxml.jackson.jr__jackson-jr-all__version>
+		<m:dependency.management__com.fasterxml.jackson.jr__jackson-jr-annotation-support__version>2.14.3</m:dependency.management__com.fasterxml.jackson.jr__jackson-jr-annotation-support__version>
+		<m:dependency.management__com.fasterxml.jackson.jr__jackson-jr-objects__version>2.14.3</m:dependency.management__com.fasterxml.jackson.jr__jackson-jr-objects__version>
+		<m:dependency.management__com.fasterxml.jackson.jr__jackson-jr-retrofit2__version>2.14.3</m:dependency.management__com.fasterxml.jackson.jr__jackson-jr-retrofit2__version>
+		<m:dependency.management__com.fasterxml.jackson.jr__jackson-jr-stree__version>2.14.3</m:dependency.management__com.fasterxml.jackson.jr__jackson-jr-stree__version>
+		<m:dependency.management__com.fasterxml.jackson.module__jackson-module-afterburner__version>2.14.3</m:dependency.management__com.fasterxml.jackson.module__jackson-module-afterburner__version>
+		<m:dependency.management__com.fasterxml.jackson.module__jackson-module-blackbird__version>2.14.3</m:dependency.management__com.fasterxml.jackson.module__jackson-module-blackbird__version>
+		<m:dependency.management__com.fasterxml.jackson.module__jackson-module-guice__version>2.14.3</m:dependency.management__com.fasterxml.jackson.module__jackson-module-guice__version>
+		<m:dependency.management__com.fasterxml.jackson.module__jackson-module-jaxb-annotations__version>2.14.3</m:dependency.management__com.fasterxml.jackson.module__jackson-module-jaxb-annotations__version>
+		<m:dependency.management__com.fasterxml.jackson.module__jackson-module-jakarta-xmlbind-annotations__version>2.14.3</m:dependency.management__com.fasterxml.jackson.module__jackson-module-jakarta-xmlbind-annotations__version>
+		<m:dependency.management__com.fasterxml.jackson.module__jackson-module-jsonSchema__version>2.14.3</m:dependency.management__com.fasterxml.jackson.module__jackson-module-jsonSchema__version>
+		<m:dependency.management__com.fasterxml.jackson.module__jackson-module-kotlin__version>2.14.3</m:dependency.management__com.fasterxml.jackson.module__jackson-module-kotlin__version>
+		<m:dependency.management__com.fasterxml.jackson.module__jackson-module-mrbean__version>2.14.3</m:dependency.management__com.fasterxml.jackson.module__jackson-module-mrbean__version>
+		<m:dependency.management__com.fasterxml.jackson.module__jackson-module-no-ctor-deser__version>2.14.3</m:dependency.management__com.fasterxml.jackson.module__jackson-module-no-ctor-deser__version>
+		<m:dependency.management__com.fasterxml.jackson.module__jackson-module-osgi__version>2.14.3</m:dependency.management__com.fasterxml.jackson.module__jackson-module-osgi__version>
+		<m:dependency.management__com.fasterxml.jackson.module__jackson-module-parameter-names__version>2.14.3</m:dependency.management__com.fasterxml.jackson.module__jackson-module-parameter-names__version>
+		<m:dependency.management__com.fasterxml.jackson.module__jackson-module-paranamer__version>2.14.3</m:dependency.management__com.fasterxml.jackson.module__jackson-module-paranamer__version>
+		<m:dependency.management__com.fasterxml.jackson.module__jackson-module-scala_2.11__version>2.14.3</m:dependency.management__com.fasterxml.jackson.module__jackson-module-scala_2.11__version>
+		<m:dependency.management__com.fasterxml.jackson.module__jackson-module-scala_2.12__version>2.14.3</m:dependency.management__com.fasterxml.jackson.module__jackson-module-scala_2.12__version>
+		<m:dependency.management__com.fasterxml.jackson.module__jackson-module-scala_2.13__version>2.14.3</m:dependency.management__com.fasterxml.jackson.module__jackson-module-scala_2.13__version>
+		<m:dependency.management__com.fasterxml.jackson.module__jackson-module-scala_3__version>2.14.3</m:dependency.management__com.fasterxml.jackson.module__jackson-module-scala_3__version>
+		<m:dependency.management__org.apache.velocity__velocity-engine-core__version>2.3</m:dependency.management__org.apache.velocity__velocity-engine-core__version>
+		<m:dependency.management__org.eclipse.jetty__jetty-server__version>9.4.54.v20240208</m:dependency.management__org.eclipse.jetty__jetty-server__version>
+		<m:dependency.management__org.eclipse.jetty__jetty-servlet__version>9.4.54.v20240208</m:dependency.management__org.eclipse.jetty__jetty-servlet__version>
+		<m:dependency.management__org.eclipse.jetty__jetty-util__version>9.4.54.v20240208</m:dependency.management__org.eclipse.jetty__jetty-util__version>
+		<m:dependency.management__javax.servlet__javax.servlet-api__version>4.0.1</m:dependency.management__javax.servlet__javax.servlet-api__version>
+		<m:dependency.management__net.sf.jopt-simple__jopt-simple__version>5.0.4</m:dependency.management__net.sf.jopt-simple__jopt-simple__version>
+		<m:dependency.management__org.apache.hadoop__hadoop-client__version>3.3.6</m:dependency.management__org.apache.hadoop__hadoop-client__version>
+		<m:dependency.management__org.apache.hadoop__hadoop-client__exclusion_0>com.google.code.findbugs__jsr305</m:dependency.management__org.apache.hadoop__hadoop-client__exclusion_0>
+		<m:dependency.management__org.mockito__mockito-core__version>4.11.0</m:dependency.management__org.mockito__mockito-core__version>
+		<m:dependency.management__org.hamcrest__hamcrest-library__version>2.2</m:dependency.management__org.hamcrest__hamcrest-library__version>
+		<m:dependency.management__org.xerial.snappy__snappy-java__version>1.1.10.5</m:dependency.management__org.xerial.snappy__snappy-java__version>
+		<m:dependency.management__org.apache.commons__commons-compress__version>1.26.2</m:dependency.management__org.apache.commons__commons-compress__version>
+		<m:dependency.management__io.grpc__grpc-core__version>1.62.2</m:dependency.management__io.grpc__grpc-core__version>
+		<m:dependency.management__io.grpc__grpc-stub__version>1.62.2</m:dependency.management__io.grpc__grpc-stub__version>
+		<m:dependency.management__io.grpc__grpc-stub__exclusion_0>com.google.code.findbugs__jsr305</m:dependency.management__io.grpc__grpc-stub__exclusion_0>
+		<m:dependency.management__io.grpc__grpc-netty__version>1.62.2</m:dependency.management__io.grpc__grpc-netty__version>
+		<m:dependency.management__io.grpc__grpc-netty__exclusion_0>com.google.code.findbugs__jsr305</m:dependency.management__io.grpc__grpc-netty__exclusion_0>
+		<m:dependency.management__org.tukaani__xz__version>1.9</m:dependency.management__org.tukaani__xz__version>
+		<m:dependency.management__com.github.luben__zstd-jni__version>1.5.5-5</m:dependency.management__com.github.luben__zstd-jni__version>
+	</info>
+	<configurations>
+		<conf name="default" visibility="public" description="runtime dependencies and master artifact can be used with this conf" extends="runtime,master"/>
+		<conf name="master" visibility="public" description="contains only the artifact published by this module itself, with no transitive dependencies"/>
+		<conf name="compile" visibility="public" description="this is the default scope, used if none is specified. Compile dependencies are available in all classpaths."/>
+		<conf name="provided" visibility="public" description="this is much like compile, but indicates you expect the JDK or a container to provide it. It is only available on the compilation classpath, and is not transitive."/>
+		<conf name="runtime" visibility="public" description="this scope indicates that the dependency is not required for compilation, but is for execution. It is in the runtime and test classpaths, but not the compile classpath." extends="compile"/>
+		<conf name="test" visibility="public" description="this scope indicates that the dependency is not required for normal use of the application, and is only available for the test compilation and execution phases." extends="runtime"/>
+		<conf name="system" visibility="public" description="this scope is similar to provided except that you have to provide the JAR which contains it explicitly. The artifact is always available and is not looked up in a repository."/>
+		<conf name="sources" visibility="public" description="this configuration contains the source artifact of this module, if any."/>
+		<conf name="javadoc" visibility="public" description="this configuration contains the javadoc artifact of this module, if any."/>
+		<conf name="optional" visibility="public" description="contains all optional dependencies"/>
+	</configurations>
+	<publications>
+	</publications>
+	<dependencies>
+		<dependency org="org.junit.vintage" name="junit-vintage-engine" rev="5.10.2" force="true" conf="test->runtime(*),master(*)"/>
+		<dependency org="org.junit.jupiter" name="junit-jupiter" rev="5.10.2" force="true" conf="test->runtime(*),master(*)"/>
+		<dependency org="org.slf4j" name="slf4j-api" rev="1.7.36" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>
+		<dependency org="org.slf4j" name="slf4j-simple" rev="1.7.36" force="true" conf="test->runtime(*),master(*)"/>
+		<override org="org.apache.maven.plugin-tools" module="maven-plugin-annotations" matcher="exact" rev="3.7.0"/>
+		<override org="com.fasterxml.jackson.core" module="jackson-annotations" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.core" module="jackson-core" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.core" module="jackson-databind" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.dataformat" module="jackson-dataformat-avro" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.dataformat" module="jackson-dataformat-cbor" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.dataformat" module="jackson-dataformat-csv" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.dataformat" module="jackson-dataformat-ion" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.dataformat" module="jackson-dataformat-properties" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.dataformat" module="jackson-dataformat-protobuf" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.dataformat" module="jackson-dataformat-smile" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.dataformat" module="jackson-dataformat-toml" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.dataformat" module="jackson-dataformat-xml" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.dataformat" module="jackson-dataformat-yaml" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.datatype" module="jackson-datatype-eclipse-collections" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.datatype" module="jackson-datatype-guava" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.datatype" module="jackson-datatype-hibernate4" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.datatype" module="jackson-datatype-hibernate5" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.datatype" module="jackson-datatype-hibernate5-jakarta" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.datatype" module="jackson-datatype-hppc" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.datatype" module="jackson-datatype-jakarta-jsonp" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.datatype" module="jackson-datatype-jaxrs" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.datatype" module="jackson-datatype-joda" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.datatype" module="jackson-datatype-joda-money" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.datatype" module="jackson-datatype-jdk8" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.datatype" module="jackson-datatype-json-org" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.datatype" module="jackson-datatype-jsr310" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.datatype" module="jackson-datatype-jsr353" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.datatype" module="jackson-datatype-pcollections" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.jaxrs" module="jackson-jaxrs-base" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.jaxrs" module="jackson-jaxrs-cbor-provider" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.jaxrs" module="jackson-jaxrs-json-provider" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.jaxrs" module="jackson-jaxrs-smile-provider" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.jaxrs" module="jackson-jaxrs-xml-provider" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.jaxrs" module="jackson-jaxrs-yaml-provider" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.jakarta.rs" module="jackson-jakarta-rs-base" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.jakarta.rs" module="jackson-jakarta-rs-cbor-provider" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.jakarta.rs" module="jackson-jakarta-rs-json-provider" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.jakarta.rs" module="jackson-jakarta-rs-smile-provider" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.jakarta.rs" module="jackson-jakarta-rs-xml-provider" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.jakarta.rs" module="jackson-jakarta-rs-yaml-provider" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.jr" module="jackson-jr-all" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.jr" module="jackson-jr-annotation-support" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.jr" module="jackson-jr-objects" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.jr" module="jackson-jr-retrofit2" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.jr" module="jackson-jr-stree" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.module" module="jackson-module-afterburner" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.module" module="jackson-module-blackbird" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.module" module="jackson-module-guice" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.module" module="jackson-module-jaxb-annotations" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.module" module="jackson-module-jakarta-xmlbind-annotations" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.module" module="jackson-module-jsonSchema" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.module" module="jackson-module-kotlin" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.module" module="jackson-module-mrbean" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.module" module="jackson-module-no-ctor-deser" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.module" module="jackson-module-osgi" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.module" module="jackson-module-parameter-names" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.module" module="jackson-module-paranamer" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.module" module="jackson-module-scala_2.11" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.module" module="jackson-module-scala_2.12" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.module" module="jackson-module-scala_2.13" matcher="exact" rev="2.14.3"/>
+		<override org="com.fasterxml.jackson.module" module="jackson-module-scala_3" matcher="exact" rev="2.14.3"/>
+		<override org="org.apache.velocity" module="velocity-engine-core" matcher="exact" rev="2.3"/>
+		<override org="org.eclipse.jetty" module="jetty-server" matcher="exact" rev="9.4.54.v20240208"/>
+		<override org="org.eclipse.jetty" module="jetty-servlet" matcher="exact" rev="9.4.54.v20240208"/>
+		<override org="org.eclipse.jetty" module="jetty-util" matcher="exact" rev="9.4.54.v20240208"/>
+		<override org="javax.servlet" module="javax.servlet-api" matcher="exact" rev="4.0.1"/>
+		<override org="net.sf.jopt-simple" module="jopt-simple" matcher="exact" rev="5.0.4"/>
+		<override org="org.apache.hadoop" module="hadoop-client" matcher="exact" rev="3.3.6"/>
+		<override org="org.mockito" module="mockito-core" matcher="exact" rev="4.11.0"/>
+		<override org="org.hamcrest" module="hamcrest-library" matcher="exact" rev="2.2"/>
+		<override org="org.xerial.snappy" module="snappy-java" matcher="exact" rev="1.1.10.5"/>
+		<override org="org.apache.commons" module="commons-compress" matcher="exact" rev="1.26.2"/>
+		<override org="io.grpc" module="grpc-core" matcher="exact" rev="1.62.2"/>
+		<override org="io.grpc" module="grpc-stub" matcher="exact" rev="1.62.2"/>
+		<override org="io.grpc" module="grpc-netty" matcher="exact" rev="1.62.2"/>
+		<override org="org.tukaani" module="xz" matcher="exact" rev="1.9"/>
+		<override org="com.github.luben" module="zstd-jni" matcher="exact" rev="1.5.5-5"/>
+	</dependencies>
+</ivy-module>
