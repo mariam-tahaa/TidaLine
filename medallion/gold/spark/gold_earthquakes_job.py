@@ -212,7 +212,7 @@ try:
 
     (
         fact_seismic.write
-        .mode("overwrite")
+        .mode("append")
         .partitionBy("date_key")
         .parquet(GOLD_FACT_SEISMIC_PATH)
     )
@@ -236,7 +236,7 @@ try:
 
     (
         proximity.write
-        .mode("overwrite")
+        .mode("append")
         .partitionBy("date_key")
         .parquet(GOLD_PROXIMITY_PATH)
     )
@@ -251,7 +251,7 @@ try:
 
     (
         risk_snapshot.write
-        .mode("overwrite")
+        .mode("append")
         .partitionBy("date_key")
         .parquet(GOLD_RISK_SNAPSHOT_PATH)
     )

@@ -27,6 +27,16 @@
     </property>
 
     <property>
+        <name>dfs.datanode.hostname</name>
+        <value>localhost</value>
+    </property>
+
+    <property>
+        <name>dfs.datanode.http.address</name>
+        <value>0.0.0.0:9864</value>
+    </property>
+
+    <property>
         <name>dfs.datanode.data.dir.perm</name>
         <value>700</value>
     </property>

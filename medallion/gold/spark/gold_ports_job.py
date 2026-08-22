@@ -324,7 +324,7 @@ try:
         logger.info("No existing Dim_Port found; initial load")
 
     dim_port = apply_scd2(spark, staging_df, existing_dim, effective_date_key, etl_ts)
-    dim_port.write.mode("overwrite").parquet(GOLD_DIM_PORT_PATH)
+    dim_port.write.mode("append").parquet(GOLD_DIM_PORT_PATH)
 
     current_count = dim_port.filter(col("is_current") == True).count()
     total_count = dim_port.count()

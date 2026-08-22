@@ -47,11 +47,18 @@ def clean_coordinates(df, lat_col, lon_col):
 
 
 def fill_unknown_strings(df, string_cols):
-    """Fill NULL values in string columns with 'UNKNOWN'"""
+    """
+    Trim string columns and replace NULL, empty, or whitespace-only
+    values with 'UNKNOWN'.
+    """
     for col_name in string_cols:
         df = df.withColumn(
             col_name,
-            coalesce(col(col_name), lit("UNKNOWN"))
+            when(
+                col(col_name).isNull() |
+                (trim(col(col_name)) == ""),
+                lit("UNKNOWN")
+            ).otherwise(trim(col(col_name)))
         )
     return df
 
@@ -309,7 +316,7 @@ logger.info("Final validation: %d records removed due to missing critical fields
 try:
     (
         silver_df.write
-        .mode("overwrite")
+        .mode("append")
         .format("parquet")
         .partitionBy("load_date")
         .save(SILVER_PATH)
