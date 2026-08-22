@@ -18,3 +18,5 @@ logs/
 
 # Spark Streaming checkpoints
 spark/jobs/checkpoints/
+checkpoints/kafka_to_snowflake/offsets/
+checkpoints/kafka_to_snowflake/commits/
